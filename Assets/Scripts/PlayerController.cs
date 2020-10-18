@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 	private const float Gravity = 9.8f;
 	private CharacterController _characterController;
 	private Vector3 _characterVelocity;
+	private bool _isSprinting;
 	
 	[SerializeField][Tooltip("The force applied to the character when jumping")]
 	private float JumpForce = 10f;
@@ -16,6 +17,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	[Tooltip("The fall speed modifier, increases gravity")]
 	private float GravityMultiplier = 2f;
+	
+	[SerializeField][Tooltip("Walking speed of the character")]
+	private Vector3 WalkingSpeed = new Vector3(2f,0f,4f); 
 	
 	// Start is called before the first frame update
 	private void Start()
@@ -34,8 +38,7 @@ public class PlayerController : MonoBehaviour
 		var wasGrounded = _characterController.isGrounded;
 
 		//TODO: Crouch
-		//TODO: Sprint
-		
+
 		if (_characterController.isGrounded)
 		{
 			//ground movement controls
@@ -70,7 +73,17 @@ public class PlayerController : MonoBehaviour
 		
 		// convert to a vector representing movement directions
 		Vector3 inputAsMovement = new Vector3(inputAxes.x, 0f, inputAxes.y);
-		
+
+		if (!_isSprinting)
+		{
+			// multiply movement direction by speed  
+			inputAsMovement.Scale(WalkingSpeed);
+		}
+		else
+		{
+			// TODO: Add sprint speed
+		}
+
 		// transform the movement vector into world space relative to the player
 		Vector3 worldSpaceMovement = transform.TransformVector(inputAsMovement);
 		_characterVelocity = worldSpaceMovement;
