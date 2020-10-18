@@ -7,12 +7,16 @@ public class PlayerController : MonoBehaviour
 	private CharacterController _characterController;
 	private Vector3 _characterVelocity;
 	
-	[SerializeField[Tooltip("The force applied to the character when jumping")]
+	[SerializeField][Tooltip("The force applied to the character when jumping")]
 	private float JumpForce = 10f;
 
 	[SerializeField][Tooltip("The camera for the first person controller")]
 	public Camera _Camera;
 
+	[SerializeField]
+	[Tooltip("The fall speed modifier, increases gravity")]
+	private float GravityMultiplier = 2f;
+	
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			// add gravitational acceleration this frame
-			_characterVelocity += Vector3.down * (Gravity * Time.deltaTime);
+			_characterVelocity += Vector3.down * (Gravity * GravityMultiplier * Time.deltaTime);
 
 			//TODO: Add air strafe
 		}
