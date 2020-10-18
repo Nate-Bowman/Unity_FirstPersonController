@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 	private const float Gravity = 9.8f;
 	private CharacterController _characterController;
 	private Vector3 _characterVelocity;
+	
+	[SerializeField[Tooltip("The force applied to the character when jumping")]
+	private float JumpForce = 10f;
 
 	[SerializeField][Tooltip("The camera for the first person controller")]
 	public Camera _Camera;
@@ -26,6 +29,9 @@ public class PlayerController : MonoBehaviour
 		// Was i grounded last frame?
 		var wasGrounded = _characterController.isGrounded;
 
+		//TODO: Crouch
+		//TODO: Sprint
+		
 		if (_characterController.isGrounded)
 		{
 			//ground movement controls
@@ -37,7 +43,7 @@ public class PlayerController : MonoBehaviour
 				_characterVelocity.y = 0;
 
 				// add jump velocity
-				_characterVelocity += Vector3.up * 10f;
+				_characterVelocity += Vector3.up * JumpForce;
 			}
 
 		}
