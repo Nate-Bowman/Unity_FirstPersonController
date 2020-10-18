@@ -19,7 +19,13 @@ public class PlayerController : MonoBehaviour
 	private float GravityMultiplier = 2f;
 	
 	[SerializeField][Tooltip("Walking speed of the character")]
-	private Vector3 WalkingSpeed = new Vector3(2f,0f,4f); 
+	private Vector3 WalkingSpeed = new Vector3(2f,0f,4f); 	
+	
+	[SerializeField][Tooltip("Sprinting speed of the character")]
+	private Vector3 SprintSpeed = new Vector3(2f,0f,9f); 
+	
+	[SerializeField][Tooltip("Walking speed of the character")]
+	private Vector3 AirStrafeSpeed = new Vector3(0.01f,0f,0.01f); 	
 	
 	[SerializeField][Tooltip("Minimum angle the camera can look up/down")]
 	private float MinCameraVerticalAngle = -70;
@@ -28,6 +34,9 @@ public class PlayerController : MonoBehaviour
 	
 	[SerializeField][Tooltip("The speed at which the camera moves")]
 	private Vector2 CameraSpeed = new Vector2(.5f,0.1f);
+
+	[SerializeField][Tooltip("Does the sprint button need to be held? false = toggle")]
+	private bool HoldToSprint;
 	
 	// Start is called before the first frame update
 	private void Start()
@@ -47,6 +56,20 @@ public class PlayerController : MonoBehaviour
 
 		//TODO: Crouch
 
+		if (HoldToSprint)
+		{
+			//sprint hold
+			_isSprinting = Input.GetButton("Sprint");
+		}
+		else
+		{
+			//sprint toggle
+			if (Input.GetButtonDown("Sprint"))
+			{
+				_isSprinting = !_isSprinting;
+			}
+		}
+
 		if (_characterController.isGrounded)
 		{
 			//ground movement controls
@@ -64,14 +87,31 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			// add gravitational acceleration this frame
-			_characterVelocity += Vector3.down * (Gravity * GravityMultiplier * Time.deltaTime);
-
-			//TODO: Add air strafe
+			// add air acceleration this frame
+			HandleAirMovement();
 		}
-
+		
+		// add gravitational acceleration this frame
+		_characterVelocity += Vector3.down * (Gravity * GravityMultiplier * Time.deltaTime);
+		
 		// Apply calculated movement
 		_characterController.Move(_characterVelocity * Time.deltaTime);
+	}
+
+	private void HandleAirMovement() 
+	{
+		// cache the input axes
+		Vector3 inputAxes = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
+		
+		// convert to a vector representing movement directions
+		Vector3 inputAsMovement = new Vector3(inputAxes.x, 0f, inputAxes.y);
+		
+		// multiply movement direction by speed  
+		inputAsMovement.Scale(AirStrafeSpeed);
+
+		// transform the movement vector into world space relative to the player
+		Vector3 worldSpaceMovement = transform.TransformVector(inputAsMovement);
+		_characterVelocity += worldSpaceMovement;
 	}
 
 	private void HandleGroundMovement()
@@ -89,7 +129,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			// TODO: Add sprint speed
+			// multiply movement direction by speed  
+			inputAsMovement.Scale(SprintSpeed);
 		}
 
 		// transform the movement vector into world space relative to the player
