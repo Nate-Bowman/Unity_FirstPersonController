@@ -28,9 +28,8 @@ public class PlayerController : MonoBehaviour
 
 		if (_characterController.isGrounded)
 		{
-			_characterVelocity = Vector3.zero;
-
-			//TODO: Add movement controls
+			//ground movement controls
+			HandleGroundMovement();
 		}
 		else
 		{
@@ -42,6 +41,19 @@ public class PlayerController : MonoBehaviour
 
 		// Apply calculated movement
 		_characterController.Move(_characterVelocity * Time.deltaTime);
+	}
+
+	private void HandleGroundMovement()
+	{
+		// cache the input axes
+		Vector3 inputAxes = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
+		
+		// convert to a vector representing movement directions
+		Vector3 inputAsMovement = new Vector3(inputAxes.x, 0f, inputAxes.y);
+		
+		// transform the movement vector into world space relative to the player
+		Vector3 worldSpaceMovement = transform.TransformVector(inputAsMovement);
+		_characterVelocity = worldSpaceMovement;
 	}
 
 	private float _cameraVerticalAngle;
