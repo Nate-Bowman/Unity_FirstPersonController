@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
 	private CharacterController _characterController;
 	private Vector3 _characterVelocity;
 
+	[SerializeField][Tooltip("The camera for the first person controller")]
+	public Camera _Camera;
+
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -17,6 +20,9 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
+
+		HandleCameraMovement();
+		
 		// Was i grounded last frame?
 		var wasGrounded = _characterController.isGrounded;
 
@@ -36,5 +42,25 @@ public class PlayerController : MonoBehaviour
 
 		// Apply calculated movement
 		_characterController.Move(_characterVelocity * Time.deltaTime);
+	}
+
+	private float _cameraVerticalAngle;
+	
+	private void HandleCameraMovement()
+	{
+		// cache the camera input axes
+		Vector3 inputAxes = new Vector2(Input.GetAxisRaw("Horizontal_Camera"),Input.GetAxisRaw("Vertical_Camera"));
+		//Debug.Log($"Hor:{Input.GetAxisRaw("Horizontal_Camera")} Ver:{Input.GetAxisRaw("Vertical_Camera")}");
+		
+		// horizontal rotation - rotate the character
+		transform.Rotate(Vector3.up, inputAxes.x,Space.Self);
+		
+		// vertical rotation - rotate the camera
+		
+		// add new input to the accumulated angle
+		_cameraVerticalAngle += inputAxes.y;
+		
+		// apply to the camera
+		_Camera.transform.localEulerAngles = new Vector3(_cameraVerticalAngle,0f,0f);
 	}
 }
