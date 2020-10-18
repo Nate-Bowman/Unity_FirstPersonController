@@ -162,4 +162,9 @@ public class PlayerController : MonoBehaviour
 		// apply to the camera
 		_Camera.transform.localEulerAngles = new Vector3(_cameraVerticalAngle,0f,0f);
 	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawSphere(_Camera.transform.position + _Camera.transform.forward,0.01f);
+	}
 }
