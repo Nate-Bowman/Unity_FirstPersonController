@@ -30,6 +30,16 @@ public class PlayerController : MonoBehaviour
 		{
 			//ground movement controls
 			HandleGroundMovement();
+					
+			if (Input.GetButtonDown("Jump"))
+			{
+				// remove vertical velocity
+				_characterVelocity.y = 0;
+
+				// add jump velocity
+				_characterVelocity += Vector3.up * 10f;
+			}
+
 		}
 		else
 		{
