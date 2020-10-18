@@ -357,3 +357,35 @@ InputManager:
     type: 0
     axis: 4
     joyNum: 0
+  - serializedVersion: 3
+    m_Name: Horizontal_Camera
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 2
+    dead: 0
+    sensitivity: 2
+    snap: 0
+    invert: 0
+    type: 1
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Vertical_Camera
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 10
+    dead: 0
+    sensitivity: 10
+    snap: 0
+    invert: 1
+    type: 1
+    axis: 1
+    joyNum: 0
