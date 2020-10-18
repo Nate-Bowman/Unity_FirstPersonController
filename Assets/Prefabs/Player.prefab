@@ -181,7 +181,7 @@ CharacterController:
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4364771909750907840
 MonoBehaviour:
@@ -195,4 +195,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30baa6f9719ec314d93d43ead4213143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpForce: 10
   _Camera: {fileID: 2213140757489576824}
