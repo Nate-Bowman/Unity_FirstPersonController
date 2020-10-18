@@ -21,6 +21,14 @@ public class PlayerController : MonoBehaviour
 	[SerializeField][Tooltip("Walking speed of the character")]
 	private Vector3 WalkingSpeed = new Vector3(2f,0f,4f); 
 	
+	[SerializeField][Tooltip("Minimum angle the camera can look up/down")]
+	private float MinCameraVerticalAngle = -70;
+	[SerializeField][Tooltip("Maximum angle the camera can look up/down")]
+	private float MaxCameraVerticalAngle = 55;
+	
+	[SerializeField][Tooltip("The speed at which the camera moves")]
+	private Vector2 CameraSpeed = new Vector2(.5f,0.1f);
+	
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -94,16 +102,21 @@ public class PlayerController : MonoBehaviour
 	private void HandleCameraMovement()
 	{
 		// cache the camera input axes
-		Vector3 inputAxes = new Vector2(Input.GetAxisRaw("Horizontal_Camera"),Input.GetAxisRaw("Vertical_Camera"));
+		Vector2 inputAxes = new Vector2(Input.GetAxisRaw("Horizontal_Camera"),Input.GetAxisRaw("Vertical_Camera"));
 		//Debug.Log($"Hor:{Input.GetAxisRaw("Horizontal_Camera")} Ver:{Input.GetAxisRaw("Vertical_Camera")}");
+
+		// scale the input by the camera speed
+		inputAxes.Scale(CameraSpeed);
 		
 		// horizontal rotation - rotate the character
 		transform.Rotate(Vector3.up, inputAxes.x,Space.Self);
 		
 		// vertical rotation - rotate the camera
-		
 		// add new input to the accumulated angle
 		_cameraVerticalAngle += inputAxes.y;
+		
+		// clamp the vertical rotation to be between min and max angles
+		_cameraVerticalAngle = Mathf.Clamp(_cameraVerticalAngle, MinCameraVerticalAngle, MaxCameraVerticalAngle);
 		
 		// apply to the camera
 		_Camera.transform.localEulerAngles = new Vector3(_cameraVerticalAngle,0f,0f);
