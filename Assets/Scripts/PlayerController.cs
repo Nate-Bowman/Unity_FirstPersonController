@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 	private CharacterController _characterController;
 	private Vector3 _characterVelocity;
 	private bool _isSprinting;
+	private float _cameraVerticalAngle;
 	
 	[SerializeField][Tooltip("The force applied to the character when jumping")]
 	private float JumpForce = 10f;
@@ -138,7 +139,6 @@ public class PlayerController : MonoBehaviour
 		_characterVelocity = worldSpaceMovement;
 	}
 
-	private float _cameraVerticalAngle;
 	
 	private void HandleCameraMovement()
 	{

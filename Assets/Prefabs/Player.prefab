@@ -197,3 +197,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpForce: 10
   _Camera: {fileID: 2213140757489576824}
+  GravityMultiplier: 2
+  WalkingSpeed: {x: 2, y: 0, z: 4}
+  SprintSpeed: {x: 2, y: 0, z: 9}
+  AirStrafeSpeed: {x: 0.01, y: 0, z: 0.01}
+  MinCameraVerticalAngle: -70
+  MaxCameraVerticalAngle: 55
+  CameraSpeed: {x: 0.5, y: 0.1}
+  HoldToSprint: 0
