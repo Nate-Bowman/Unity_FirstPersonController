@@ -2232,5 +2232,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4364771909750907840, guid: 39e3430f8750eb447bd1770ce4df1257,
+        type: 3}
+      propertyPath: CameraSpeed.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364771909750907840, guid: 39e3430f8750eb447bd1770ce4df1257,
+        type: 3}
+      propertyPath: CameraSpeed.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e3430f8750eb447bd1770ce4df1257, type: 3}

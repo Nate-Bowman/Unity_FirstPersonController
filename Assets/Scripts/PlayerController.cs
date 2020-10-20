@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 	private CharacterController _characterController;
 	private Vector3 _characterVelocity;
 	private bool _isSprinting;
+	private bool _isCrouching;
 	private float _cameraVerticalAngle;
 	
 	[SerializeField][Tooltip("The force applied to the character when jumping")]
@@ -34,16 +35,25 @@ public class PlayerController : MonoBehaviour
 	private float MaxCameraVerticalAngle = 55;
 	
 	[SerializeField][Tooltip("The speed at which the camera moves")]
-	private Vector2 CameraSpeed = new Vector2(.5f,0.1f);
+	private Vector2 CameraSpeed = new Vector2(0.5f,0.5f);
 
 	[SerializeField][Tooltip("Does the sprint button need to be held? false = toggle")]
 	private bool HoldToSprint;
-	
+
+	[SerializeField][Tooltip("Does the crouch button need to be held? false = toggle")]
+	private bool HoldToCrouch;
+
+	[SerializeField]
+	private float crouchedHeight = 0.7f;
+
+	private float _standingHeight;
+
 	// Start is called before the first frame update
 	private void Start()
 	{
 		// cache the character controller component
 		_characterController = GetComponent<CharacterController>();
+		_standingHeight = _characterController.height;
 	}
 
 	// Update is called once per frame
@@ -55,8 +65,21 @@ public class PlayerController : MonoBehaviour
 		// Was i grounded last frame?
 		var wasGrounded = _characterController.isGrounded;
 
-		//TODO: Crouch
-
+		// (de)activate the "wanted" crouch state 
+		if (HoldToCrouch)
+		{
+			//crouch  hold
+			SetCrouchState(Input.GetButton("Crouch"));
+		}
+		else
+		{
+			//crouch toggle
+			if (Input.GetButtonDown("Crouch"))
+			{
+				SetCrouchState(!_isCrouching);
+			}
+		}
+		
 		if (HoldToSprint)
 		{
 			//sprint hold
@@ -78,6 +101,12 @@ public class PlayerController : MonoBehaviour
 					
 			if (Input.GetButtonDown("Jump"))
 			{
+				// if we are crouched, then try to stand up
+				if (_isCrouching)
+				{
+					SetCrouchState(false);
+				}
+				
 				// remove vertical velocity
 				_characterVelocity.y = 0;
 
@@ -97,6 +126,55 @@ public class PlayerController : MonoBehaviour
 		
 		// Apply calculated movement
 		_characterController.Move(_characterVelocity * Time.deltaTime);
+	}
+
+	private bool SetCrouchState(bool crouched)
+	{
+		
+		// if we are already crouching and want to crouch, exit
+		// if we are already standing and want to stand, exit
+		if (_isCrouching && crouched || !_isCrouching && !crouched)
+		{
+			return false;
+		}
+		
+		// if we want to be crouched, then crouch
+		if (crouched)
+		{
+			// set the correct controller height for crouch
+			_characterController.height = crouchedHeight;
+		}
+		// else see if we are allowed to stand up
+		else 
+		{ 
+			var controllerRadius = _characterController.radius;
+			var transformUp = transform.up;
+			var position = transform.position;
+			
+			// get the top and bottom sphere centers of the capsule when standing
+			var topHemisphere = position + (transformUp * controllerRadius);
+			var bottomHemisphere = position + (transformUp * (_standingHeight - controllerRadius));
+
+			// see if the capsule will overlap anything that isn't itself when standing up
+			// get all the collisions
+			var overlapping = Physics.OverlapCapsule(bottomHemisphere, topHemisphere, controllerRadius, -1, QueryTriggerInteraction.Ignore);
+
+			// iterate over the collisions to see if we would hit something
+			foreach (var coll in overlapping)
+			{
+				if (coll != _characterController)
+				{
+					return false;
+				}
+			}
+			
+			// if we are here then we can stand up, change character height to standing height
+			_characterController.height = _standingHeight;
+		}
+		
+		// set the crouched status
+		_isCrouching = crouched;
+		return true;
 	}
 
 	private void HandleAirMovement() 
