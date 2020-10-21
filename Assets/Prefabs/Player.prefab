@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2213140758950037507}
   - component: {fileID: 2213140758950037517}
   - component: {fileID: 4364771909750907840}
+  - component: {fileID: 8248499002717812762}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -203,5 +204,22 @@ MonoBehaviour:
   AirStrafeSpeed: {x: 0.01, y: 0, z: 0.01}
   MinCameraVerticalAngle: -70
   MaxCameraVerticalAngle: 55
-  CameraSpeed: {x: 0.5, y: 0.1}
+  CameraSpeed: {x: 0.5, y: 0.5}
   HoldToSprint: 0
+  HoldToCrouch: 0
+  crouchedHeight: 0.7
+--- !u!114 &8248499002717812762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213140758950037518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136f95b3ff058ba438691e657d385153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
+  _carryDistance: 1.25
+  _interactionDistance: 2
