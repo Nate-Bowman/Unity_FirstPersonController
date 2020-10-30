@@ -1,53 +1,55 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-///  Basic HUD
-/// </summary>
-public class HUD : MonoBehaviour
-{
+namespace UI {
 	/// <summary>
-	///  Singleton instance of HUD
+	///  Basic HUD
 	/// </summary>
-	public static HUD Instance;
-
-	[SerializeField, Tooltip("The output text UI component")]
-	public Text OutputText;
-
-	/// <summary>
-	///  True if the output value was recently set
-	/// </summary>
-	private bool RecentlySet { get; set; }
-
-	/// <summary>
-	///  Set the output text
-	/// </summary>
-	/// <param name="s">The new value of the text field</param>
-	public void SetOutputText(string s)
+	public class HUD : MonoBehaviour
 	{
-		OutputText.text = s;
-		RecentlySet = true;
-	}
+		/// <summary>
+		///  Singleton instance of HUD
+		/// </summary>
+		public static HUD Instance;
 
-	// Start is called before the first frame update
-	private void Start()
-	{
-		if (Instance != null)
+		[SerializeField, Tooltip("The output text UI component")]
+		public Text OutputText;
+
+		/// <summary>
+		///  True if the output value was recently set
+		/// </summary>
+		private bool RecentlySet { get; set; }
+
+		/// <summary>
+		///  Set the output text
+		/// </summary>
+		/// <param name="s">The new value of the text field</param>
+		public void SetOutputText(string s)
 		{
-			DestroyImmediate(gameObject);
+			OutputText.text = s;
+			RecentlySet = true;
 		}
 
-		Instance = this;
-	}
-
-	// Update is called once per frame
-	private void Update()
-	{
-		if (!RecentlySet)
+		// Start is called before the first frame update
+		private void Start()
 		{
-			OutputText.text = "";
+			if (Instance != null)
+			{
+				DestroyImmediate(gameObject);
+			}
+
+			Instance = this;
 		}
 
-		RecentlySet = false;
+		// Update is called once per frame
+		private void Update()
+		{
+			if (!RecentlySet)
+			{
+				OutputText.text = "";
+			}
+
+			RecentlySet = false;
+		}
 	}
 }
