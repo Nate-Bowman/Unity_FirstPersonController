@@ -1,6 +1,7 @@
-using UnityEngine;
+namespace Interaction
+{
+	using UnityEngine;
 
-namespace Interaction {
 	public class AnimatorToggle : InteractiveObject
 	{
 		[SerializeField]
@@ -8,16 +9,16 @@ namespace Interaction {
 
 		[SerializeField]
 		private string AnimationTriggerName = "Toggle";
-	
-		private void Start()
-		{
-			_Animator = GetComponent<Animator>();
-		}
 
 		/// <inheritdoc cref="InteractiveObject.DoAction" />
 		public override void DoAction(Transform caller)
 		{
 			_Animator.SetTrigger(AnimationTriggerName);
+		}
+
+		private void Start()
+		{
+			_Animator = GetComponent<Animator>();
 		}
 	}
 }

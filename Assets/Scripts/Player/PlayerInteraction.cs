@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿namespace Player
+{
+	using UnityEngine;
 
-namespace Player {
 	public class PlayerInteraction : MonoBehaviour
 	{
 		[SerializeField]

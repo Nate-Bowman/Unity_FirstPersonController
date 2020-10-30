@@ -1,7 +1,7 @@
-using UnityEngine;
-
-namespace Interaction {
+namespace Interaction
+{
 	using UI;
+	using UnityEngine;
 
 	/// <summary>
 	///  Abstract base class for Interactive Objects

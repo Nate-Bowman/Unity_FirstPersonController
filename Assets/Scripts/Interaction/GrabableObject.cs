@@ -1,6 +1,7 @@
-using UnityEngine;
+namespace Interaction
+{
+	using UnityEngine;
 
-namespace Interaction {
 	/// <summary>
 	///  An interactive object that can be grabbed and dropped
 	/// </summary>

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿namespace UI
+{
+	using UnityEngine;
+	using UnityEngine.UI;
 
-namespace UI {
 	/// <summary>
 	///  Basic HUD
 	/// </summary>
