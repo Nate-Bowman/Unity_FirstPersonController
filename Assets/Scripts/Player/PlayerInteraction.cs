@@ -82,7 +82,7 @@ public class PlayerInteraction : MonoBehaviour
 			// execute any action on the carried object
 			if (Input.GetButtonDown("Action"))
 			{
-				_carriedObject.transform.SendMessage("DoAction", transform);
+				_carriedObject.transform.SendMessageUpwards("DoAction", transform);
 			}
 
 			UpdateCarriedObject();
@@ -103,11 +103,11 @@ public class PlayerInteraction : MonoBehaviour
 			_selectedObject = _hit.transform;
 
 			// send a message to the interactable object
-			_selectedObject.SendMessage("DisplayDetailUI", SendMessageOptions.DontRequireReceiver);
+			_selectedObject.SendMessageUpwards("DisplayDetailUI", SendMessageOptions.DontRequireReceiver);
 
 			if (Input.GetButtonDown("Action"))
 			{
-				_selectedObject.transform.SendMessage("DoAction", transform);
+				_selectedObject.transform.SendMessageUpwards("DoAction", transform);
 			}
 		}
 		else
