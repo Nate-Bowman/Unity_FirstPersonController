@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 2213140758950037517}
   - component: {fileID: 4364771909750907840}
   - component: {fileID: 8248499002717812762}
+  - component: {fileID: 2599462285952803973}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -196,18 +197,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30baa6f9719ec314d93d43ead4213143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 10
   _Camera: {fileID: 2213140757489576824}
-  GravityMultiplier: 2
-  WalkingSpeed: {x: 2, y: 0, z: 4}
-  SprintSpeed: {x: 2, y: 0, z: 9}
   AirStrafeSpeed: {x: 0.01, y: 0, z: 0.01}
-  MinCameraVerticalAngle: -70
-  MaxCameraVerticalAngle: 55
   CameraSpeed: {x: 0.5, y: 0.5}
-  HoldToSprint: 0
-  HoldToCrouch: 0
   crouchedHeight: 0.7
+  GravityMultiplier: 2
+  HoldToCrouch: 0
+  HoldToSprint: 0
+  JumpForce: 10
+  MaxCameraVerticalAngle: 55
+  MinCameraVerticalAngle: -70
+  SprintSpeed: {x: 2, y: 0, z: 9}
+  WalkingSpeed: {x: 2, y: 0, z: 4}
 --- !u!114 &8248499002717812762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,3 +224,17 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _carryDistance: 1.25
   _interactionDistance: 2
+--- !u!114 &2599462285952803973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213140758950037518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dee8d26b819420449c1162d2ff6eda1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventorySize: 30
+  LootDataList: []
